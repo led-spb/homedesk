@@ -1,0 +1,69 @@
+.weather_plugin {
+   width: 320px;
+   height: 96px;
+}
+.weather_current{
+  width: 100%;
+  height: 96px;
+  position: absolute;
+  top: 0px;
+}
+.weather_forecast{
+  width: 100%;
+  height: 225px;
+  position: absolute;
+  top: 96px;
+}
+
+.weather_city {
+   position: absolute;
+   display: none;
+   left: 0px;
+   top: 0px;
+   font-size: 20px;
+   width: 100%;
+   text-align: center;
+}
+.weather_icon {
+   width: 100%;
+   height: 100%;
+   position: absolute;
+   left: 0px;
+   top: 0px;
+   background-position: 0px 18px;
+   background-repeat: no-repeat;
+   background-size: 64px 64px;
+}
+.weather_cond {
+   width: 100%;
+   height: 100%;
+   border: none;
+   font-size: 38px;
+   text-align: center;
+   display: block;
+   line-height: 96px;
+}
+.weather_city, .weather_detail, .weather_updated, .weather_wind, .weather_future {
+   font-size: 18px;
+   color: #a0a0a0;
+}
+.weather_detail {
+   position: absolute;
+   left: 5px;
+   bottom: 2px;
+}
+.weather_updated {
+   position: absolute;
+   right: 5px;
+   bottom: 2px;
+}
+.weather_wind {
+   display: none;
+}
+.weather_future{
+   position: absolute;
+   top: 28px;
+   right: 5px;
+   text-align:right;
+   font-size: 17px;
+}

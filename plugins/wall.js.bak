@@ -1,0 +1,60 @@
+app.plugins.wall = function( holder, options ){
+   this.holder = holder;
+   this.options = $.extend( {}, {token:"", aid:"", interval: 5*60*1000}, options );
+
+   this.current_background = "";
+   this.current_offset_y = 0;
+
+   this.update = function(){
+       var self=this;
+
+       // get images list
+       $.getJSON("https://api.vk.com/method/photos.get?access_token="+self.options.token+"&album_id="+self.options.aid+"&callback=?", 
+       function(data){
+           for(var i=0;i<10;i++){
+                 var new_background = data.response[  Math.round( Math.random() * (data.response.length-1)) ].src_xbig;
+                 if( typeof new_background !== undefined && (new_background!=self.current_background || data.response.length<=1) ){
+                     self.current_background = new_background;
+                     break;
+                  }
+           }
+
+           self.animate_change();
+           self.schedule();
+           /*
+           var img = new Image();
+           img.onload = function(){
+                var x=img.width;
+                var y=img.height;
+                img = null;
+                self.current_offset_y=Math.round( (720 - (y*(1024/x)))/2 );
+                self.animate_change();
+                self.schedule();
+           };
+           img.src=self.current_background;*/
+       });
+   };
+
+   this.schedule = function(){
+      var self = this;
+      clearInterval( self.interval_id );
+      self.interval_id = setInterval( function(){ self.update() }, self.options.interval )
+   }
+
+   this.animate_change = function(){
+      var self = this;
+      self.holder.animate( {"opacity": 0},
+             function(){
+                $(this)
+                   //.css( {'background-image': 'url('+self.current_background+')', 'background-position-y': self.current_offset_y+"px" } )
+                   .css( {'background-image': 'url('+self.current_background+')' } )
+                   .animate( {"opacity": 1} )
+             }
+      );
+   };
+
+   var self=this;
+   //app.viewport.on( "swiperight", function(){ self.update() } );
+
+   this.update();
+};
