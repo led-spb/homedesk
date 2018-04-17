@@ -40,8 +40,11 @@ $( function(){
                              if( !value.enabled )
                                return;
                              console.log("["+ value.type+"]");
-                             var applet = self.add_applet( value.type, value.options, idx );
-                             applet.holder.css( $.extend( {"z-index": applet.idx}, value.css ) );
+                             try{
+                               var applet = self.add_applet( value.type, value.options, idx );
+                               applet.holder.css( $.extend( {"z-index": applet.idx}, value.css ) );
+                             }catch(err){
+                             }
                        }
                    );
                    self.onStarted();

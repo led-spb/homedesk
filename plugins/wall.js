@@ -10,7 +10,7 @@ app.plugins.wall = function( holder, options ){
       var self = this;
       self.holder.addClass("fixed");
 
-      $.getJSON("https://api.vk.com/method/photos.get?access_token="+self.options.token+"&album_id="+self.options.aid+"&callback=?",
+      $.getJSON("https://api.vk.com/method/photos.get?v=1&access_token="+self.options.token+"&album_id="+self.options.aid+"&callback=?",
          function(data){
              $.each(data.response, function(){
                 var url = null;

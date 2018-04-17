@@ -20,7 +20,7 @@ app.plugins.camera = function(holder, options){
                   self.holder.css('background-image', 'url("data:image/jpeg;base64,'+encoded+'")' );
               }
 
-              if( message.destinationName.endsWith("/motion") ){
+              if( message.destinationName.endsWith("/motion_door") ){
                   if( message.payloadString=="1" ){
                       self.turn_on_camera();
                   }else{
@@ -32,8 +32,8 @@ app.plugins.camera = function(holder, options){
         var connectOptions = { 
              onSuccess: function(){
                  console.log("MQTT broker connected!");
-                 self.client.subscribe("/home/alarm/camera/+/photo");
-                 self.client.subscribe("/home/alarm/camera/+/motion");
+                 self.client.subscribe("/home/camera/door/photo");
+                 // self.client.subscribe("/home/sensor/motion_door");
              },
 
              onFailure: function(message){
