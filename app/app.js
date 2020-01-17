@@ -23,6 +23,14 @@ $( function(){
              }
          });
 
+         if( typeof this.utils.mqtt != 'undefined' ){
+             this.utils.mqtt.subscribe('homedesk/actions', function(message){
+                 if( message.payloadString=='reload' ){
+                    window.location.reload()
+                 }
+             })
+         }
+
          this.create_widgets(CONFIG.widgets);
       },
 
