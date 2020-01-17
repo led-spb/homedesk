@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="ru">
 <head>
     <title>Home dashboard</title>
     <meta charset="utf-8" />
@@ -7,44 +7,53 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="viewport" content="height=device-height, width=device-width, user-scalable=no" />
 
-    <link rel="stylesheet" type="text/css" href="js/jquery-ui.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="css/alertify.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="//cdn.materialdesignicons.com/4.7.95/css/materialdesignicons.min.css">
+
     <link rel="stylesheet" type="text/css" href="style.css" />
-    <link rel="stylesheet" type="text/css" href="static/font-awesome.min.css"/>
 
 
-    <script type="text/javascript" src="js/utils.js"></script>
     <script type="text/javascript" src="js/jquery-2.1.0.min.js"></script>
-    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="js/js.cookie.js"></script>
-    <script type="text/javascript" src="js/jquery.ui.touch-punch.min.js"></script>
-
-<!--
-    <script type="text/javascript" src="js/excanvas.min.js"></script>
-    <script type="text/javascript" src="js/jquery.flot.min.js"></script>
-    <script type="text/javascript" src="js/jquery.flot.time.min.js"></script>
-
-    <script type="text/javascript" src="js/curvedLines.js"></script>
-    <script type="text/javascript" src="js/binaryXHR.js"></script>
-    <script type="text/javascript" src="js/rrdFile-1.1.1.js"></script>
--->
-
-    <script type="text/javascript" src="js/highcharts.js"></script>
-    <script type="text/javascript" src="js/highcharts-more.js"></script>
-    <script type="text/javascript" src="js/solid-gauge.js"></script>
+    <script type="text/javascript" src="js/moment-with-locales.min.js"></script>
 
     <script type="text/javascript" src="js/base64.js"></script>
-    <script type="text/javascript" src="js/mqttws31.js"></script>
- 
-    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="js/paho-mqtt.js"></script>
+
+    <script type="text/javascript" src="js/alertify.min.js"></script>
+
+    <script type="text/javascript">
+       var suffix = location.protocol === "file:" ? "" : "?_=" + Math.random();
+       [
+          'config', 'app/app', 'app/mqtt'
+       ].map(function (value) {
+          document.write('<sc'+'ript src="'+value+".js"+suffix+'"></scr'+'ipt>');
+       });
+    </script>
+
+    <script type="text/javascript">
+       var suffix = location.protocol === "file:" ? "" : "?_=" + Math.random();
+       [
+          'camera', 'wall', 'weather', 'clock', 'icon',
+       ].map(function (value) {
+          document.write('<li'+'nk rel="stylesheet" href="plugins/'+value+".css"+suffix+'"/>');
+          document.write('<sc'+'ript src="plugins/'+value+".js"+suffix+'"></scr'+'ipt>');
+       });
+    </script>
+
+</head>
+<body>
+    <div id="viewport"></div>
 
     <script type="text/javascript">
        $(function(){
-           app.init( { viewport:'#viewport' } );
-      });
+           // setTimeout( function(){
+              app.init( { viewport:'#viewport' } )
+           //}, 5000)
+       });
     </script>
-</head>
-<body>
-    <div id="viewport">
-    </div>
 </body>
 </html>

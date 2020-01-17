@@ -1,8 +1,10 @@
+$(function(){
+
 app.plugins.weather = function(holder, options) {
 
   this.holder = holder;
   this.time_periods = [ {"name":"утро","from":7*60, "to":10*60}, {"name":"день","from":10*60+1, "to":15*60}, {"name":"вечер","from":15*60+1, "to":21*60} ];
-  this.options = $.extend({}, {city:'Санкт-Петербург', interval: 5*60*1000, appkey: ''}, options);
+  this.options = $.extend({}, {}, options);
   this.toggle_state = false;
   this.fallbackInterval = 500;
 
@@ -10,17 +12,33 @@ app.plugins.weather = function(holder, options) {
       var self = this;
 
       this.holder.append('<div class="weather_current">'
-                            +'<div class="weather_icon"></div><div class="weather_cond"></div><div class="weather_wind"></div><div class="weather_city"></div>'
-                            +'<div class="weather_updated"></div><div class="weather_detail"></div><div class="weather_future"></div>'
+                            +'<div class="weather_icon"></div>'
+                            +'<div class="weather_cond"></div>'
+                            +'<div class="weather_updated"><span class="mdi mdi-reload"></span><span class="weather_updated_text"></span></div>'
+                            +'<div class="weather_detail"></div>'
+                            +'<div class="weather_future">'
+                                 +'<div><span class="mdi mdi-weather-sunset-up"></span><span class="weather_sunrise"></span></div>'
+                                 +'<div><span class="mdi mdi-weather-sunset-down"></span><span class="weather_sunset"></span></div>'
+                            +'</div>'
                         +'</div>'
       );
       this.holder.append('<div class="weather_forecast"></div>');
 
-      //this.holder.click( function(){ self.toggleOpen(); } );
-      this.update();
+      app.utils.mqtt.subscribe("weather/spb", function(message){
+          self.data = JSON.parse(message.payloadString)
+          self.show()
+      })
+  };
+
+  this.show = function(){
       var self = this;
 
-      setInterval( function(){ self.update() }, self.options.interval );
+      self.holder.find('.weather_updated_text').text(moment(self.data.dt*1000).format('HH:mm'))
+      self.holder.find(".weather_detail").text(self.data.weather[0].description)
+      self.holder.find(".weather_cond").text( (self.data.main.temp>=0?'+':'')+(Math.round(parseFloat(self.data.main.temp)*10)/10)+'°');
+      self.holder.find(".weather_icon").css( 'background-image','url("http://openweathermap.org/img/w/'+self.data.weather[0].icon+'.png")');
+      self.holder.find(".weather_sunrise").text(moment(self.data.sys.sunrise*1000).format('HH:mm'))
+      self.holder.find(".weather_sunset").text(moment(self.data.sys.sunset*1000).format('HH:mm'))
   };
 
   this.toggleOpen = function(){
@@ -45,28 +63,10 @@ app.plugins.weather = function(holder, options) {
      }
      return;
   }
-
-
-  this.updateForecast = function(){
-      var i=0; var text="";
-      for(var idx in this.forecast){
-         if( i>=1 && i<=2 ){
-           var f = this.forecast[idx];
-           var temp = f.temp;
-
-           var msg = f.period+" "+(temp>=0?'+':'')+(Math.round(parseFloat(temp)*10)/10)+'°';
-           //console.log(msg);
-           text =  text + (text==""?msg:"<br>"+msg);
-         }
-         i++;
-       }
-
-       this.holder.find(".weather_future").html( text );
-   }
-
-   this.loadCurrent = function(){
+ 
+  this.loadCurrent = function(){
         var self=this;
-        $.getJSON( 'http://api.openweathermap.org/data/2.5/weather?callback=?', { q :self.options.city+',ru', APPID:self.options.app_key, lang:'ru', units:'metric' },
+        $.getJSON( location.protocol+'//api.openweathermap.org/data/2.5/weather?callback=?', { q :self.options.city+',ru', APPID:self.options.app_key, lang:'ru', units:'metric' },
             function(data){
               if( !data || !data.main || data.main.temp===undefined ){
                  self.fallbackInterval = Math.floor(self.falbackInterval*1.5);
@@ -98,7 +98,7 @@ app.plugins.weather = function(holder, options) {
      var now = new Date();
      var forecast = {};
 
-     $.getJSON( 'http://api.openweathermap.org/data/2.5/forecast?callback=?', { q :self.options.city+',ru', APPID:self.options.app_key, lang:'ru', units:'metric' },
+     $.getJSON( location.protocol+'//api.openweathermap.org/data/2.5/forecast?callback=?', { q :self.options.city+',ru', APPID:self.options.app_key, lang:'ru', units:'metric' },
          function(data){
             var currdate, currhour;
             for(var i in data.list){
@@ -132,9 +132,11 @@ app.plugins.weather = function(holder, options) {
   }
 
   this.update = function(){
-        this.loadCurrent();
-        this.loadForecast();
+        //this.loadCurrent();
+        //this.loadForecast();
   };
 
   this.init();
-};
+}
+
+})

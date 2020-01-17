@@ -1,4 +1,4 @@
-.weather_plugin {
+.weather_widget {
    width: 320px;
    height: 96px;
 }
@@ -17,11 +17,9 @@
 
 .weather_city {
    position: absolute;
-   display: none;
-   left: 0px;
+   right: 0px;
    top: 0px;
    font-size: 20px;
-   width: 100%;
    text-align: center;
 }
 .weather_icon {
@@ -43,7 +41,7 @@
    display: block;
    line-height: 96px;
 }
-.weather_city, .weather_detail, .weather_updated, .weather_wind, .weather_future {
+.weather_city, .weather_detail, .weather_updated, .weather_wind, .weather_future, .weather_sun  {
    font-size: 18px;
    color: #a0a0a0;
 }
@@ -56,9 +54,15 @@
    position: absolute;
    right: 5px;
    bottom: 2px;
+   font-size: 16px;
 }
 .weather_wind {
    display: none;
+}
+.weather_sun {
+   position: absolute;
+   left: 2px;
+   top: 2px;
 }
 .weather_future{
    position: absolute;

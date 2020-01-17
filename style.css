@@ -14,8 +14,8 @@ img, iframe {
 }
 
 body {
-    margin: 0;
-    padding: 0;
+    padding: 0px;
+    margin: 0px;
     overflow: hidden;
 }
 
@@ -30,45 +30,22 @@ body {
 }
 
 
-.plugin_holder, .plugin_full, .menu {
-   #background: #0078c9;
-   background: url('static/background_4.png');
-   #opacity: 0.6;
+.widget_holder, .widget_full, .menu {
+   background-color: rgba(0,0,0,0.6);
+   /* background: url('static/background_4.png'); */
    position: absolute;
    overflow: hidden;
-   border-radius: 5px;
+   border-radius: 3px;
    box-shadow: 0 0 15px rgba(0,0,0,1);
 }
 
-.plugin_full {
-  position: static;
-  width: 100%;
-  height: 100%;
+.alert {
+  position: absolute;
+  right: 0px;
+  z-index: 100;
+  width: 260px;
+  overflow: hidden;
+  background-color: #ffb3a5;
+  padding: 3px;
   display: none;
 }
-
-.ui-resizable {
-  position: inherit;
-}
-
-.menu{
-  width: 200px;
-  margin: 0 auto;
-  z-index: 1000;
-  position: relative;
-  border-radius: 0px 0px 5px 5px;
-  padding: 0;
-  display: none;
-}
-
-
-.toggler{
-  width: 100%;
-  height: 10px;
-}
-
-.menu-collapsed{
-  height: 10px;
-}
-
-.ui-resizable-helper { border: 2px dotted #00F; }

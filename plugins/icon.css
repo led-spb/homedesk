@@ -1,0 +1,24 @@
+.icon_widget {
+   width: 112px;
+   height: 112px;
+
+   text-align: center;
+   color: #a0a0a0;
+}
+
+.icon_image {
+  font-size: 62px;
+}
+
+.icon_body {
+  color: white;
+}
+
+.icon_head {
+}
+
+.icon_foot {
+   position: absolute;
+   width: 100%;
+   bottom: 0px;
+}

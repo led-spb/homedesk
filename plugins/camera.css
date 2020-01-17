@@ -1,25 +1,17 @@
-.camera_plugin {
+.camera_widget, .camera_stream {
    width: 320px;
    height: 240px;
 
    z-index: 100;
-   /* background-image: none; */
    background-repeat: no-repeat no-repeat;
    background-position: center center;
    background-size: cover;
 }
 
-
-.camera_fullscreen{
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  border-radius: 0px;
-  display: none; 
-
-  background-repeat: no-repeat no-repeat;
-  background-position: center center;
-  background-size: cover;
+.camera_stream {
+   width: 720px;
+   height: 568px;
+   left: 50%;
+   top: 50%;
+   transform: translate(-50%, -50%);
 }
