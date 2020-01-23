@@ -14,6 +14,7 @@ app.plugins.camera = function(holder, options){
    };
 
    this.on_snapshot = function(message){
+       this.last_motion = message.payloadBytes;
        this.draw_frame(message.payloadBytes);
    };
 
@@ -72,6 +73,7 @@ app.plugins.camera = function(holder, options){
             self.sock.close();
         }
         this.holder.removeClass("camera_stream")
+        this.draw_frame(this.last_motion)
    };
 
    this.init();

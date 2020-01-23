@@ -1,13 +1,12 @@
 $(function(){
 
-app.plugins.icon = function(holder, options){
+app.plugins.text = function(holder, options){
    this.holder   = holder;
    this.options  = $.extend({
         topic: 'home/sensor/unknown', 
         header: "",
         footer: "",
-        icon_on: "", 
-        icon_off: ""
+        text: "",
    },
    options);
 
@@ -24,16 +23,16 @@ app.plugins.icon = function(holder, options){
 
    this.init = function(){
       var self = this;
-      self.holder.hide();
+      self.holder.hide()
 
       this.holder.append(
-           '<div class="icon_head"></div>'
-          +'<div class="icon_body"><span class="icon_image mdi"></span></div>'
-          +'<div class="icon_foot"></div>'
+           '<div class="text_head"></div>'
+          +'<div class="text_body"></div>'
+          +'<div class="text_foot"></div>'
       );
 
       if( typeof(self.options.click) == 'function' ){
-          this.holder.find(".icon_body").click(function(){ self.options.click(self) });
+          this.holder.find(".text_body").click(function(){ self.options.click(self) });
       }
 
       app.utils.mqtt.subscribe( self.options.topic, 
@@ -50,15 +49,10 @@ app.plugins.icon = function(holder, options){
                 self.holder.css( self.options.style(self) )
              }
 
-             self.holder.find(".icon_foot").text(typeof self.options.footer == 'function' ? self.options.footer(self) :self.options.footer)
-             self.holder.find(".icon_head").text(typeof self.options.header == 'function' ? self.options.header(self) :self.options.header)
-
-             if( self.status() ){
-                self.holder.find('.icon_image').addClass(self.options.icon_on).removeClass(self.options.icon_off)
-             }else{
-                self.holder.find('.icon_image').removeClass(self.options.icon_on).addClass(self.options.icon_off)
-             }
-             self.holder.show();
+             self.holder.find(".text_foot").text(typeof self.options.footer == 'function' ? self.options.footer(self) :self.options.footer)
+             self.holder.find(".text_head").text(typeof self.options.header == 'function' ? self.options.header(self) :self.options.header)
+             self.holder.find('.text_body').text(self.status())
+             self.holder.show()
           }
       );
    };

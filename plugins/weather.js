@@ -23,6 +23,7 @@ app.plugins.weather = function(holder, options) {
                         +'</div>'
       );
       this.holder.append('<div class="weather_forecast"></div>');
+      this.holder.hide();
 
       app.utils.mqtt.subscribe("weather/spb", function(message){
           self.data = JSON.parse(message.payloadString)
@@ -39,6 +40,8 @@ app.plugins.weather = function(holder, options) {
       self.holder.find(".weather_icon").css( 'background-image','url("http://openweathermap.org/img/w/'+self.data.weather[0].icon+'.png")');
       self.holder.find(".weather_sunrise").text(moment(self.data.sys.sunrise*1000).format('HH:mm'))
       self.holder.find(".weather_sunset").text(moment(self.data.sys.sunset*1000).format('HH:mm'))
+
+      self.holder.show();
   };
 
   this.toggleOpen = function(){

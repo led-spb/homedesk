@@ -3,6 +3,7 @@ $(function(){
 app.plugins.clock = function(holder, options){
    this.holder   = holder;
    this.options  = $.extend( {dateformat: "dddd, DD MMMM", timeformat: "HH:mm"}, options);
+   this.holder.on('click', function(){screenfull.toggle()});
 
    this.init = function(){
         var self = this;

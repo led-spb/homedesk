@@ -1,0 +1,22 @@
+.text_widget {
+   width: 112px;
+   height: 112px;
+
+   text-align: center;
+   color: #a0a0a0;
+}
+
+.text_body {
+  color: white;
+  font-size: 32px;
+  line-height: 70px;
+}
+
+.text_head {
+}
+
+.text_foot {
+   position: absolute;
+   width: 100%;
+   bottom: 0px;
+}
