@@ -35,6 +35,9 @@ app.plugins.icon = function(holder, options){
       if( typeof(self.options.click) == 'function' ){
           this.holder.find(".icon_body").click(function(){ self.options.click(self) });
       }
+      if( typeof(self.options.init) == 'function' ){
+          self.options.init(self)
+      }
 
       app.utils.mqtt.subscribe( self.options.topic, 
           function(message){

@@ -1,0 +1,16 @@
+{
+  "short_name": "Homedesk",
+  "name": "Homedesk",
+  "icons": [
+    {
+      "src": "images/icons-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "/homedesk/?source=pwa",
+  "background_color": "#3367D6",
+  "display": "fullscreen",
+  "scope": "/homedesk/",
+  "theme_color": "#3367D6"
+}

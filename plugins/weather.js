@@ -4,7 +4,7 @@ app.plugins.weather = function(holder, options) {
 
   this.holder = holder;
   this.time_periods = [ {"name":"утро","from":7*60, "to":10*60}, {"name":"день","from":10*60+1, "to":15*60}, {"name":"вечер","from":15*60+1, "to":21*60} ];
-  this.options = $.extend({}, {}, options);
+  this.options = $.extend({interval: 5*60*1000}, {}, options);
   this.toggle_state = false;
   this.fallbackInterval = 500;
 
@@ -22,13 +22,15 @@ app.plugins.weather = function(holder, options) {
                             +'</div>'
                         +'</div>'
       );
-      this.holder.append('<div class="weather_forecast"></div>');
+      this.holder.append('<div class="weather_forecast"><iframe id="weather_forecast" src="https://rp5.ru/htmla.php?id=7285&lang=ru&um=00000&bg=%23000000&ft=%23ffffff&fc=%23453535&c=%23ede8e8&f=Arial&s=12&sc=3" width=100% height=207 frameborder=0 scrolling=no style="margin:0;"></iframe></div>');
       this.holder.hide();
+      this.holder.click( function(){ self.toggleOpen() } );
 
       app.utils.mqtt.subscribe("weather/spb", function(message){
           self.data = JSON.parse(message.payloadString)
           self.show()
-      })
+      });
+      setInterval( function(){ self.update() }, self.options.interval )
   };
 
   this.show = function(){
@@ -135,8 +137,8 @@ app.plugins.weather = function(holder, options) {
   }
 
   this.update = function(){
-        //this.loadCurrent();
-        //this.loadForecast();
+     var iframe = document.getElementById('weather_forecast');
+     iframe.src = iframe.src;
   };
 
   this.init();

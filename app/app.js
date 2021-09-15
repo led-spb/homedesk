@@ -19,7 +19,7 @@ $( function(){
              try{
                 obj.init(self)
              }catch(err){
-                logging.error('Unable to initialize utility '+name, err)
+                console.error('Unable to initialize utility '+name, err)
              }
          });
 

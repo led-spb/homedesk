@@ -6,8 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="viewport" content="height=device-height, width=device-width, user-scalable=no" />
+    <meta name="mobile-web-app-capable" content="yes">
 
 
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" type="text/css" href="css/alertify.min.css" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 
@@ -22,9 +24,14 @@
 
     <script type="text/javascript" src="js/base64.js"></script>
     <script type="text/javascript" src="js/paho-mqtt.js"></script>
+    <script type="text/javascript" src="js/humanize.min.js"></script>
 
     <script type="text/javascript" src="js/alertify.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/5.0.0/screenfull.min.js"></script>
+
+    <!-- MapQuest -->
+    <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
 
     <script type="text/javascript">
        var suffix = location.protocol === "file:" ? "" : "?_=" + Math.random();
@@ -38,7 +45,7 @@
     <script type="text/javascript">
        var suffix = location.protocol === "file:" ? "" : "?_=" + Math.random();
        [
-          'camera', 'wall', 'weather', 'clock', 'icon', 'text',
+          'camera', 'wall', 'weather', 'clock', 'icon', 'text', 'iframe', 'map'
        ].map(function (value) {
           document.write('<li'+'nk rel="stylesheet" href="plugins/'+value+".css"+suffix+'"/>');
           document.write('<sc'+'ript src="plugins/'+value+".js"+suffix+'"></scr'+'ipt>');
@@ -47,7 +54,8 @@
 
 </head>
 <body>
-    <div id="viewport"></div>
+    <div id="viewport">
+    </div>
 
     <script type="text/javascript">
        $(function(){

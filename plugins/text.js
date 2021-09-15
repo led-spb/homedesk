@@ -43,7 +43,7 @@ app.plugins.text = function(holder, options){
              }catch(e){
              }
              if( typeof self.options.changed == 'function' ){
-                self.options.changed(self)
+                self.options.changed(self, message)
              }
              if( typeof self.options.style == 'function' ){
                 self.holder.css( self.options.style(self) )

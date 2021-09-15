@@ -12,28 +12,24 @@ $(function(){
         var self = this;
         self.holder.addClass("fixed");
 
-        $.getJSON("https://api.vk.com/method/photos.get?v=5.00&access_token="+self.options.token+"&album_id="+self.options.aid+"&callback=?",
+        $.getJSON("https://api.vk.com/method/photos.get?v=5.131&access_token="+self.options.token+"&album_id="+self.options.aid+"&callback=?",
            function(data){
+               if( data["error"] ){
+                  alertify.error(""+data["error"]["error_msg"]);
+                  return;
+               }
                $.each(data.response.items, function(){
-                  var url = null;
-
-                  if( "photo_1280" in this )
-                     url = this.photo_1280;
-                  else if( "photo_807" in this )
-                     url = this.photo_807;
-
-                  if( url ){
-                     self.images.push( url );
-                  }
+                  var image = this.sizes.pop()
+                  if( image && image.url )
+                     self.images.push( image.url );
                });
                self.schedule();
            }
         ).fail( 
            function(){
-              setTimeout( function(){ self.init() }, 0 );
+              setTimeout( function(){self.init()}, 13000 );
            }
         );
-
      };
 
      this.update = function(){

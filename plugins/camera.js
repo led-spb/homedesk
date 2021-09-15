@@ -23,8 +23,9 @@ app.plugins.camera = function(holder, options){
    }
 
    this.on_motion = function(message){
-       if( message.payloadString=="1" ){
-          this.turn_on_camera(400);
+       data = JSON.parse(message.payloadString)
+       if( data.status==1 ){
+          this.turn_on_camera(800);
        }else{
           this.turn_off_camera();
        }
@@ -55,7 +56,7 @@ app.plugins.camera = function(holder, options){
         if( this.holder.hasClass("camera_stream") ){
            this.turn_off_camera()
         }else{
-           this.turn_on_camera(400)
+           this.turn_on_camera(800)
         }
    };
 

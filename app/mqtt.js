@@ -34,6 +34,7 @@ $(function(){
          var connect_options = {
              keepAliveInterval: CONFIG.mqtt.keepAliveInterval,
              mqttVersion: 3,
+             useSSL: window.location.protocol == 'https:',
              reconnect: false,
              onSuccess: function(){
                 alertify.success('MQTT connected')
@@ -47,6 +48,7 @@ $(function(){
                 setTimeout( function(){ self.init(self.app) }, 5000);
              }
          };
+         console.log(connect_options);
          self._client.connect(connect_options);
      },
 
