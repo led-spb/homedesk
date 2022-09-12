@@ -62,7 +62,7 @@ $(function(){
      },
 
      subscribe: function(pattern, callback){
-        console.log('mqtt.subscribe', pattern)
+        // console.log('mqtt.subscribe', pattern)
         this._subscriptions.push({ pattern: pattern, regexp: this.topic_regexp(pattern), callback: callback})
 
         if( this._client.isConnected() ){

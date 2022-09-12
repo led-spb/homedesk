@@ -3,7 +3,7 @@ $(function(){
 app.plugins.weather = function(holder, options) {
 
   this.holder = holder;
-  this.time_periods = [ {"name":"утро","from":7*60, "to":10*60}, {"name":"день","from":10*60+1, "to":15*60}, {"name":"вечер","from":15*60+1, "to":21*60} ];
+  this.time_periods = [ {"name":"утро","from":7*60, "to":10*60}, {"name":"день","from":10*60+1, "to":16*60}, {"name":"вечер","from":16*60+1, "to":21*60} ];
   this.options = $.extend({interval: 5*60*1000}, {}, options);
   this.toggle_state = false;
   this.fallbackInterval = 500;

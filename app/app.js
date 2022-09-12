@@ -3,18 +3,22 @@ $( function(){
    app = {
       options: {},
       plugins: {},
+      rows: {
+          "1": {offset: 0, height: 0, left: 0, right: 0},
+         "-1": {offset: 0, height: 0, left: 0, right: 0}
+      },
       widgets: [],
       utils: {},
 
       init: function(options){
-         var self = this;
+         const self = this;
          moment.locale('ru');
          alertify.set('notifier','position', 'top-right');
          alertify.set('notifier','delay', 3);
 
-         this.options = options;
-         this.viewport = $(options.viewport);
-
+         self.options = options;
+         self.viewport = $(options.viewport);
+         
          $.each(this.utils, function(name, obj){
              try{
                 obj.init(self)
@@ -36,17 +40,14 @@ $( function(){
 
 
       create_widgets: function(widgets){
-         var self = this;
-
+         const self = this;
          console.log("Creating widgets");
          $.each( widgets,
              function( idx, value ){
                    if( !value.enabled )
                       return;
-                   console.log("["+ value.type+"]");
                    try{
-                      var widget = self.add_widget( value.type, value.options, idx );
-                      widget.holder.css( $.extend( {"z-index": widget.idx}, value.css ) );
+                      var widget = self.add_widget( value, idx );
                    }catch(err){
                       console.log(err);
                    }
@@ -59,18 +60,58 @@ $( function(){
          return $.getScript("plugins/"+plugin+".js").done( done );
       },
 
+      arrange_widget: function(widget, width, height){
+         const self = this;
+         const position = $.extend({}, widget.position)
+         const style = $.extend({}, widget.css);
 
-      add_widget: function(type, opt, idx){
+         const row_id = position.row;
+         if( row_id ){
+            if( !self.rows[""+row_id] ){
+                const prev_row = self.rows[""+(row_id-1)] 
+                self.rows[""+row_id] = {offset: prev_row.offset+prev_row.height+5, height: 0, left: 0, right: 0}
+            }
+            const row = self.rows[""+row_id];
+            if( position.direction == 'left' ){
+               style.left = row.left+'px';
+               row.left = row.left + width + 5;
+            }else{
+               style.right = row.right+'px';
+               row.right = row.right + width + 5;
+            }
+            if( row_id > 0 ){
+               style.top = row.offset+'px';
+            }else {
+               style.bottom = row.offset+'px';
+            }
+            if( height > row.height ){
+               row.height = height;
+            }
+         }         
+         return style;
+      },
+
+      add_widget: function(w, idx){
+         const self = this;
+         const type = w.type;
+         const opt = w.options;
+
          if( typeof app.plugins[type] != 'function'){
             alertify.error('Couldn`t find plugin '+type, 10000)
             return
          }
 
          try{
-            var holder = $('<div class="widget_holder '+type+'_widget"></div>');
+            var holder = $('<div></div>')
+                               .attr('id', 'widget-'+idx)
+                               .attr('class','widget_holder '+type+'_widget');
+            // calculate and arrange widget
             this.viewport.append( holder );
-
-            // create new widget
+            const width = holder.get(0).offsetWidth,
+                  height = holder.get(0).offsetHeight;
+            holder.css( $.extend({"z-index": idx}, self.arrange_widget(w, width, height)) );
+            
+             // create new widget
             var widget = new app.plugins[type](holder, opt);
             widget.name = type;
             this.widgets.push( widget );
@@ -84,7 +125,7 @@ $( function(){
       },
 
       find_widget: function(type){
-         var self = this;
+         const self = this;
          return self.widgets.reduce(
             function(total, w){
               if( w.name == type )

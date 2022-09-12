@@ -38,7 +38,7 @@ app.plugins.map = function(holder, options){
 
              var name = message.topic.split('/').pop()
              var batt = self.state.batt
-             var changed = self.state.tst
+             var changed = self.state.created_at
 
              if( !(name in self.markers) )
                  self.markers[name] = L.mapquest.textMarker([self.state.lat, self.state.lon]).addTo(self.map)
